@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Главная · Умамусуме{% endblock %}
+{% block content %}
+<section class="hero">
+    <div>
+        <span class="eyebrow">АИС клуба любителей скачек</span>
+        <h1>Управление данными о состязаниях в одном месте</h1>
+        <p>Прототип объединяет сведения о владельцах, лошадях, жокеях, состязаниях и результатах заездов.</p>
+    </div>
+    <div class="hero-badge">TEST / STAGE / PROD</div>
+</section>
+
+<section class="stats">
+    <a class="stat-card" href="{{ url_for('owners') }}"><strong>{{ stats.owners }}</strong><span>Владельцев</span></a>
+    <a class="stat-card" href="{{ url_for('horses') }}"><strong>{{ stats.horses }}</strong><span>Лошадей</span></a>
+    <a class="stat-card" href="{{ url_for('jockeys') }}"><strong>{{ stats.jockeys }}</strong><span>Жокеев</span></a>
+    <a class="stat-card" href="{{ url_for('competitions') }}"><strong>{{ stats.competitions }}</strong><span>Состязаний</span></a>
+    <a class="stat-card" href="{{ url_for('results') }}"><strong>{{ stats.participations }}</strong><span>Результатов</span></a>
+</section>
+
+<section class="panel">
+    <div class="panel-head">
+        <div>
+            <span class="eyebrow">Последние данные</span>
+            <h2>Состязания</h2>
+        </div>
+        <a class="button secondary" href="{{ url_for('competitions') }}">Открыть список</a>
+    </div>
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Дата</th>
+                    <th>Время</th>
+                    <th>Ипподром</th>
+                    <th>Статус</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in recent %}
+                <tr>
+                    <td>{{ item.name or "Без названия" }}</td>
+                    <td>{{ item.race_date }}</td>
+                    <td>{{ item.race_time }}</td>
+                    <td>{{ item.hippodrome }}</td>
+                    <td><span class="status">{{ item.status }}</span></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

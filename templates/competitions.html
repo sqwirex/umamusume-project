@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Состязания · Умамусуме{% endblock %}
+{% block content %}
+<div class="page-head">
+    <div>
+        <span class="eyebrow">Календарь</span>
+        <h1>Состязания</h1>
+    </div>
+</div>
+<div class="grid">
+    <section class="panel">
+        <h2>Новое состязание</h2>
+        <form method="post" class="form">
+            <label>Название<input name="name"></label>
+            <label>Дата<input name="race_date" type="date" required></label>
+            <label>Время<input name="race_time" type="time" required></label>
+            <label>Ипподром<input name="hippodrome" required></label>
+            <label>Статус
+                <select name="status" required>
+                    <option>Запланировано</option>
+                    <option>Завершено</option>
+                    <option>Отменено</option>
+                </select>
+            </label>
+            <button class="button" type="submit">Создать</button>
+        </form>
+    </section>
+    <section class="panel wide">
+        <h2>Календарь состязаний</h2>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Название</th><th>Дата</th><th>Время</th><th>Ипподром</th><th>Статус</th></tr></thead>
+                <tbody>
+                    {% for item in competitions %}
+                    <tr>
+                        <td>{{ item.name or "Без названия" }}</td>
+                        <td>{{ item.race_date }}</td>
+                        <td>{{ item.race_time }}</td>
+                        <td>{{ item.hippodrome }}</td>
+                        <td><span class="status">{{ item.status }}</span></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+{% endblock %}

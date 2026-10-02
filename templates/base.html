@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Умамусуме{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="{{ url_for('index') }}">
+            <span class="brand-mark">U</span>
+            <span>
+                <strong>Умамусуме</strong>
+                <small>Информационная система клуба</small>
+            </span>
+        </a>
+        <nav>
+            <a href="{{ url_for('owners') }}">Владельцы</a>
+            <a href="{{ url_for('horses') }}">Лошади</a>
+            <a href="{{ url_for('jockeys') }}">Жокеи</a>
+            <a href="{{ url_for('competitions') }}">Состязания</a>
+            <a href="{{ url_for('results') }}">Результаты</a>
+        </nav>
+    </header>
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+    <footer>Лабораторная работа №2 · Москва · 2026</footer>
+</body>
+</html>

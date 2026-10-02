@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Лошади · Умамусуме{% endblock %}
+{% block content %}
+<div class="page-head">
+    <div>
+        <span class="eyebrow">Основные данные</span>
+        <h1>Лошади</h1>
+    </div>
+</div>
+<div class="grid">
+    <section class="panel">
+        <h2>Добавить лошадь</h2>
+        <form method="post" class="form">
+            <label>Кличка<input name="name" required></label>
+            <label>Пол
+                <select name="gender" required>
+                    <option>Жеребец</option>
+                    <option>Кобыла</option>
+                    <option>Мерин</option>
+                </select>
+            </label>
+            <label>Возраст<input name="age" type="number" min="1" max="40" required></label>
+            <label>Владелец
+                <select name="owner_id" required>
+                    {% for item in owners %}
+                    <option value="{{ item.id }}">{{ item.name }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <button class="button" type="submit">Добавить</button>
+        </form>
+    </section>
+    <section class="panel wide">
+        <h2>Зарегистрированные лошади</h2>
+        <div class="table-wrap">
+            <table>
+                <thead><tr><th>Кличка</th><th>Пол</th><th>Возраст</th><th>Владелец</th></tr></thead>
+                <tbody>
+                    {% for item in horses %}
+                    <tr><td>{{ item.name }}</td><td>{{ item.gender }}</td><td>{{ item.age }}</td><td>{{ item.owner_name }}</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+{% endblock %}
