@@ -1,10 +1,11 @@
+import os
 from pathlib import Path
 import sqlite3
 from flask import Flask, g, redirect, render_template, request, url_for
 
 app = Flask(__name__)
 BASE_DIR = Path(__file__).resolve().parent
-DB_PATH = BASE_DIR / "umamusume.db"
+DB_PATH = Path(os.environ.get("DB_PATH", BASE_DIR / "umamusume.db"))
 
 
 def get_db():
