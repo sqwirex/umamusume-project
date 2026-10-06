@@ -34,3 +34,4 @@ cd umamusume-project
 source .venv/bin/activate
 python app.py
 ```
+CI check dev 2026-10-06-21:04:15
