@@ -5,6 +5,7 @@ from flask import Flask, g, redirect, render_template, request, url_for
 
 app = Flask(__name__)
 BASE_DIR = Path(__file__).resolve().parent
+APP_VERSION = "1.1"
 DB_PATH = Path(os.environ.get("DB_PATH", BASE_DIR / "umamusume.db"))
 
 
@@ -296,6 +297,14 @@ def results():
         horses=horse_rows,
         jockeys=jockey_rows
     )
+
+
+@app.route("/health")
+def health():
+    db = get_db()
+    tables = ("owners", "horses", "jockeys", "competitions", "participations")
+    counts = {t: db.execute(f"SELECT COUNT(*) FROM {t}").fetchone()[0] for t in tables}
+    return {"status": "ok", "version": APP_VERSION, "counts": counts}
 
 
 if __name__ == "__main__":
