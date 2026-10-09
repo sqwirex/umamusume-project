@@ -163,7 +163,7 @@ def owners():
             )
         )
         db.commit()
-        return redirect(url_for("owners"))
+        return "broken", 200
     rows = db.execute("SELECT * FROM owners ORDER BY name").fetchall()
     return render_template("owners.html", owners=rows)
 
