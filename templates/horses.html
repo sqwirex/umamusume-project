@@ -20,6 +20,8 @@
                 </select>
             </label>
             <label>Возраст<input name="age" type="number" min="1" max="40" required></label>
+            <label>Порода<input name="breed" maxlength="100" placeholder="Необязательно"></label>
+            <label>Масть<input name="coat_color" maxlength="100" placeholder="Необязательно"></label>
             <label>Владелец
                 <select name="owner_id" required>
                     {% for item in owners %}
@@ -34,10 +36,10 @@
         <h2>Зарегистрированные лошади</h2>
         <div class="table-wrap">
             <table>
-                <thead><tr><th>Кличка</th><th>Пол</th><th>Возраст</th><th>Владелец</th></tr></thead>
+                <thead><tr><th>Кличка</th><th>Пол</th><th>Возраст</th><th>Порода</th><th>Масть</th><th>Владелец</th></tr></thead>
                 <tbody>
                     {% for item in horses %}
-                    <tr><td>{{ item.name }}</td><td>{{ item.gender }}</td><td>{{ item.age }}</td><td>{{ item.owner_name }}</td></tr>
+                    <tr><td>{{ item.name }}</td><td>{{ item.gender }}</td><td>{{ item.age }}</td><td>{{ item.breed or '–' }}</td><td>{{ item.coat_color or '–' }}</td><td>{{ item.owner_name }}</td></tr>
                     {% endfor %}
                 </tbody>
             </table>

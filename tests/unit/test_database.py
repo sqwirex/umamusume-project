@@ -26,3 +26,6 @@ def test_init_db_creates_expected_tables(test_app):
         ).fetchall()
         names = {row["name"] for row in rows}
         assert {"owners", "horses", "jockeys", "competitions", "participations"} <= names
+        horse_columns = {row["name"] for row in db.execute("PRAGMA table_info(horses)")}
+        assert "breed" in horse_columns
+        assert "coat_color" in horse_columns

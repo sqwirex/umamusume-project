@@ -32,6 +32,8 @@ def test_create_horse(client, test_app):
             "gender": "Жеребец",
             "age": "4",
             "owner_id": "1",
+            "breed": "Thoroughbred",
+            "coat_color": "Серая",
         },
     )
 
@@ -39,13 +41,20 @@ def test_create_horse(client, test_app):
 
     with test_app.app_context():
         row = application.get_db().execute(
-            "SELECT name, gender, age, owner_id FROM horses WHERE name = ?",
+            "SELECT name, gender, age, owner_id, breed, coat_color FROM horses WHERE name = ?",
             ("Test Horse",),
         ).fetchone()
 
     assert row is not None
     assert row["age"] == 4
     assert row["owner_id"] == 1
+    assert row["breed"] == "Thoroughbred"
+    assert row["coat_color"] == "Серая"
+
+    response = client.get("/horses")
+    assert response.status_code == 200
+    assert b"Thoroughbred" in response.data
+    assert "Серая".encode() in response.data
 
 
 def test_create_jockey(client, test_app):

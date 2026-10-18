@@ -5,7 +5,7 @@ from flask import Flask, g, redirect, render_template, request, url_for
 
 app = Flask(__name__)
 BASE_DIR = Path(__file__).resolve().parent
-APP_VERSION = "1.1"
+APP_VERSION = "1.3"
 DB_PATH = Path(os.environ.get("DB_PATH", BASE_DIR / "umamusume.db"))
 
 
@@ -42,6 +42,8 @@ def init_db():
             gender TEXT NOT NULL,
             age INTEGER NOT NULL CHECK(age BETWEEN 1 AND 40),
             owner_id INTEGER NOT NULL,
+            breed TEXT,
+            coat_color TEXT,
             UNIQUE(owner_id, name),
             FOREIGN KEY(owner_id) REFERENCES owners(id)
         );
@@ -173,19 +175,22 @@ def horses():
     db = get_db()
     if request.method == "POST":
         db.execute(
-            "INSERT INTO horses(name, gender, age, owner_id) VALUES (?, ?, ?, ?)",
+            "INSERT INTO horses(name, gender, age, owner_id, breed, coat_color) VALUES (?, ?, ?, ?, ?, ?)",
             (
                 request.form["name"].strip(),
                 request.form["gender"],
                 int(request.form["age"]),
-                int(request.form["owner_id"])
+                int(request.form["owner_id"]),
+                request.form.get("breed", "").strip() or None,
+                request.form.get("coat_color", "").strip() or None
             )
         )
         db.commit()
         return redirect(url_for("horses"))
     rows = db.execute(
         """
-        SELECT h.id, h.name, h.gender, h.age, o.name AS owner_name
+        SELECT h.id, h.name, h.gender, h.age, h.breed, h.coat_color,
+               o.name AS owner_name
         FROM horses h
         JOIN owners o ON o.id = h.owner_id
         ORDER BY h.name
