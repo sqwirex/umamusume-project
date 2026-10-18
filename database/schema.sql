@@ -1,26 +1,3 @@
-CREATE TABLE owners (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT NOT NULL,
-            address TEXT NOT NULL,
-            phone TEXT NOT NULL
-        );
-CREATE TABLE sqlite_sequence(name,seq);
-CREATE TABLE horses (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT NOT NULL,
-            gender TEXT NOT NULL,
-            age INTEGER NOT NULL CHECK(age BETWEEN 1 AND 40),
-            owner_id INTEGER NOT NULL, breed TEXT,
-            UNIQUE(owner_id, name),
-            FOREIGN KEY(owner_id) REFERENCES owners(id)
-        );
-CREATE TABLE jockeys (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT NOT NULL,
-            address TEXT NOT NULL,
-            age INTEGER NOT NULL CHECK(age > 0),
-            rating REAL NOT NULL CHECK(rating >= 0)
-        );
 CREATE TABLE competitions (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT,
@@ -29,6 +6,32 @@ CREATE TABLE competitions (
             hippodrome TEXT NOT NULL,
             status TEXT NOT NULL
         );
+
+CREATE TABLE horses (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            gender TEXT NOT NULL,
+            age INTEGER NOT NULL CHECK(age BETWEEN 1 AND 40),
+            owner_id INTEGER NOT NULL, breed TEXT, coat_color TEXT,
+            UNIQUE(owner_id, name),
+            FOREIGN KEY(owner_id) REFERENCES owners(id)
+        );
+
+CREATE TABLE jockeys (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            address TEXT NOT NULL,
+            age INTEGER NOT NULL CHECK(age > 0),
+            rating REAL NOT NULL CHECK(rating >= 0)
+        );
+
+CREATE TABLE owners (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            address TEXT NOT NULL,
+            phone TEXT NOT NULL
+        );
+
 CREATE TABLE participations (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             competition_id INTEGER NOT NULL,
@@ -44,3 +47,5 @@ CREATE TABLE participations (
             FOREIGN KEY(horse_id) REFERENCES horses(id),
             FOREIGN KEY(jockey_id) REFERENCES jockeys(id)
         );
+
+CREATE TABLE sqlite_sequence(name,seq);
